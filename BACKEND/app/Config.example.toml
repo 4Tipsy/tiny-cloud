@@ -1,0 +1,16 @@
+
+[Config.main]
+port = 1234
+host = "0.0.0.0"
+new_user_space_available = 10_000_000_000 # in bytes
+user_image_max_size = 2_000_000 # in bytes
+session_ttl = 43200 # 12h # in sec
+
+[Config.fs]
+default_user_image_path = "/some/abs/path" # abs pathes!!!
+file_storage_path = "/some/abs/path/" # abs pathes!!!
+critical_total_used_space = 4_000_000 # in bytes
+
+[Config.databases]
+mongo_db_uri = "mongodb://localhost:27017"
+redis_cred = "redis://localhost:6379"

@@ -42,8 +42,8 @@ fun StatusPagesConfig.errorHandler() {
         val responseBody = ErrResponseBody("Internal server error", "").let { Json.encodeToString(it) }
         call.response.headers.append(HttpHeaders.ContentType, ContentType.Application.Json.toString()) // set header
         call.respond(HttpStatusCode.InternalServerError, responseBody)
-
-        cause.printStackTrace() // for log purposes
+        // for log purposes
+        cause.printStackTrace()
       }
 
     }

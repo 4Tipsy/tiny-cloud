@@ -4,6 +4,7 @@
 .idea
 .kotlin
 gradle
+!gradle/wrapper
 
 app/build
 app/Config.toml

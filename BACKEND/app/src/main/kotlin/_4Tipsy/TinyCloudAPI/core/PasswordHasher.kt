@@ -15,7 +15,6 @@ class PasswordHasher {
 
 
     fun hashPassword(rawPassword: String): String {
-
       val hashedPassword = argon2.hash(10, 65536, 1, rawPassword.toCharArray())
       return hashedPassword
     }

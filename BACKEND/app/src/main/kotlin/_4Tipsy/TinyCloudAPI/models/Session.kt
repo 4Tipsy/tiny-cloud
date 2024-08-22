@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 
 
 @Serializable
-data class Session(
+data class Session (
   val uid: String,
 
   val openedAt: String,

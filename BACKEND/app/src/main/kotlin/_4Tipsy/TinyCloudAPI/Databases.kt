@@ -40,7 +40,7 @@ object Databases {
 
 
   // lifeCheck
-  operator fun invoke() {
+  fun lifeCheck() {
     this.mongo; this.redis
   }
 

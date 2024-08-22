@@ -92,7 +92,7 @@ class FsEntityService {
       // get new free id
       var newEid: String
       while (true) {
-        newEid = "ENT-" + getSimpleHash(11, withNumeric = true, withLowerCase = true, withUpperCase = true) + "-DIR"
+        newEid = "EID-" + getSimpleHash(11, withNumeric = true, withLowerCase = true, withUpperCase = true) + "-D"
 
         if (fsEntityCollection.find(/**/ Filters.and( Document("eid", newEid), Document("ownerUid", uid) ) /**/).firstOrNull() == null
         ) break
@@ -144,7 +144,7 @@ class FsEntityService {
       // get new free eid
       var newEid: String
       while (true) {
-        newEid = "ENT-" + getSimpleHash(11, withNumeric = true, withLowerCase = true, withUpperCase = true) + "-FILE"
+        newEid = "EID-" + getSimpleHash(11, withNumeric = true, withLowerCase = true, withUpperCase = true) + "-F"
 
         if (fsEntityCollection.find(/**/ Filters.and( Document("eid", newEid), Document("ownerUid", uid) ) /**/).firstOrNull() == null
         ) break

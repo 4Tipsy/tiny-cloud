@@ -32,7 +32,7 @@ const val API_VERSION = "2.0.0-ALPHA"
 const val REFRESH_TOKENS_TTL: Long = 60*60*24*30 // in sec
 
 fun main() {
-  Databases() // lifeCheck db's
+  Databases.lifeCheck() // lifeCheck db's
   embeddedServer(
     Netty,
     port = Config.load().main.port,

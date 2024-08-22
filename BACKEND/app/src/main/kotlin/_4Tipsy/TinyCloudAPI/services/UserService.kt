@@ -69,7 +69,7 @@ class UserService {
       while (true) {
         val hash = getSimpleHash(11, withNumeric=true)
         val now = LocalDate.now().format( Frm.ofPattern("ddMMyy") )
-        newUid = "USR-${hash}H-${now}T"
+        newUid = "UID-${hash}H-${now}T"
 
         if (userCollection.find( Document("uid", newUid) ).firstOrNull()
           == null) break

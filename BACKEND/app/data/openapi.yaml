@@ -1,0 +1,709 @@
+openapi: 3.0.0
+info:
+  title: Tiny Cloud API
+  version: 2.0.0-ALPHA
+  description: "<img src=\"http://tiny-cloud.xyz/api/utils-service/uwu\" alt=\"uwu.png\">\n\n### Tiny-Cloud-API is ~~small python~~ kotlin app designed to store and manage files in cloud\n\nOnce small and tiny, now overcomplicated and fully overwritten...\nApp is made with `Kotlin` (Ktor) and MongoDB, Redis. Covered with 0 tests, but fully operational!\n\n\n---\n- Each user has default `10 GB` of free space, this number can be increased personally\n- Files and directories could be shared with outer web via `share-service`\n- Passwords are stored in hashed way, auth made as web-sessions\n\n---\n\n**Clients:**\n\n\n- [Web Client](\"\")\n- [CLI](\"\")\n\n**Links:**\n\n\n- [Redoc](/api/redoc)\n- [Rapidoc](/api/rapidoc)\n- [Source (GitHub)](https://github.com/4Tipsy/tiny-cloud/tree/BACKEND)\n---\nAll routes are bellow:\n"
+
+
+
+
+paths:
+
+  /api/user-service/create-new-user:
+    post:
+      summary: create-new-user
+      tags:
+        - User Service
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+                - password
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          description: "on success"
+          content:
+            text/plain:
+              example: OK
+        4xx:
+          description: "on error"
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - errorType
+                  - errorDetail
+                properties:
+                  errorType:
+                    type: string
+                  errorDetail:
+                    type: string
+
+  /api/user-service/login:
+    post:
+      summary: login
+      tags:
+        - User Service
+      description:
+        "Gives `session_token` and `refresh_token` cookies"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          description: "on success"
+          content:
+            text/plain:
+              example: OK
+        4xx:
+          description: "on error"
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - errorType
+                  - errorDetail
+                properties:
+                  errorType:
+                    type: string
+                  errorDetail:
+                    type: string
+
+  /api/user-service/refresh-session:
+    get:
+      summary: refresh-session
+      tags:
+        - User Service
+      description:
+        "Exchanges `refresh_token` for a new pair of credential tokens"
+      responses:
+        200:
+          description: "on success"
+          content:
+            text/plain:
+              example: OK
+        4xx:
+          description: "on error"
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - errorType
+                  - errorDetail
+                properties:
+                  errorType:
+                    type: string
+                  errorDetail:
+                    type: string
+
+  /api/user-service/get-current-user:
+    get:
+      summary: get-current-user
+      tags:
+        - User Service
+      description:
+        "[!] `session_token` required"
+      responses:
+        200:
+          description: "on success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
+        4xx:
+          description: "on error"
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - errorType
+                  - errorDetail
+                properties:
+                  errorType:
+                    type: string
+                  errorDetail:
+                    type: string
+
+  /api/user-service/get-user-image:
+    get:
+      summary: get-user-image
+      tags:
+        - User Service
+      responses:
+        200:
+          description: "on success"
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+                example: "binary"
+        4xx:
+          description: "on error"
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - errorType
+                  - errorDetail
+                properties:
+                  errorType:
+                    type: string
+                  errorDetail:
+                    type: string
+
+  /api/user-service/update-user-image:
+    post:
+      summary: update-user-image
+      tags:
+        - User Service
+      description:
+        "[!] `session_token` required"
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - File
+              properties:
+                File:
+                  type: string
+                  format: binary
+      responses:
+        200:
+          description: "on success"
+          content:
+            text/plain:
+              example: OK
+        4xx:
+          description: "on error"
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - errorType
+                  - errorDetail
+                properties:
+                  errorType:
+                    type: string
+                  errorDetail:
+                    type: string
+
+  /api/fs-service/get-dir-contents:
+    post:
+      summary: get-dir-contents
+      tags:
+        - Fs Service
+      description:
+        "[!] `session_token` required"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - where
+              properties:
+                where:
+                  type: string
+                  example: "drive:/"
+      responses:
+        200:
+          description: "on success"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FsEntity'
+        4xx:
+          description: "on error"
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - errorType
+                  - errorDetail
+                properties:
+                  errorType:
+                    type: string
+                  errorDetail:
+                    type: string
+
+  /api/fs-service/create-new-dir:
+    post:
+      summary: create-new-dir
+      tags:
+        - Fs Service
+      description:
+        "[!] `session_token` required"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - where
+                - name
+              properties:
+                where:
+                  type: string
+                  example: "drive:/"
+                name:
+                  type: string
+      responses:
+        200:
+          description: "on success"
+          content:
+            text/plain:
+              example: OK
+        4xx:
+          description: "on error"
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - errorType
+                  - errorDetail
+                properties:
+                  errorType:
+                    type: string
+                  errorDetail:
+                    type: string
+
+  /api/fs-service/upload-file:
+    post:
+      summary: upload-file
+      tags:
+        - Fs Service
+      description:
+        "[!] `session_token` required"
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - File
+                - Request
+              properties:
+                File:
+                  type: string
+                  format: binary
+                Request:
+                  type: object
+                  required:
+                    - where
+                    - name
+                  properties:
+                    where:
+                      type: string
+                      example: "drive:/"
+                    name:
+                      type: string
+      responses:
+        200:
+          description: "on success"
+          content:
+            text/plain:
+              example: OK
+        4xx:
+          description: "on error"
+          parameters:
+            - name: Content-Type
+              in: header
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - errorType
+                  - errorDetail
+                properties:
+                  errorType:
+                    type: string
+                  errorDetail:
+                    type: string
+
+  /api/fs-service/rename-entity:
+    post:
+      summary: rename-entity
+      tags:
+        - Fs Service
+      description:
+        "[!] `session_token` required"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - target
+                - newName
+              properties:
+                target:
+                  type: string
+                  example: "drive:/"
+                newName:
+                  type: string
+      responses:
+        200:
+          description: "on success"
+          content:
+            text/plain:
+              example: OK
+        4xx:
+          description: "on error"
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - errorType
+                  - errorDetail
+                properties:
+                  errorType:
+                    type: string
+                  errorDetail:
+                    type: string
+
+  /api/fs-service/delete-entity:
+    post:
+      summary: delete-entity
+      tags:
+        - Fs Service
+      description:
+        "[!] `session_token` required"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - target
+              properties:
+                target:
+                  type: string
+                  example: "drive:/"
+      responses:
+        200:
+          description: "on success"
+          content:
+            text/plain:
+              example: OK
+        4xx:
+          description: "on error"
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - errorType
+                  - errorDetail
+                properties:
+                  errorType:
+                    type: string
+                  errorDetail:
+                    type: string
+
+  /api/share-service/make-shared:
+    post:
+      summary: make-shared
+      tags:
+        - Shared Service
+      description:
+        "[!] `session_token` required"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - target
+              properties:
+                target:
+                  type: string
+                  example: "drive:/"
+      responses:
+        200:
+          description: "on success"
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - sharedLink
+                properties:
+                  sharedLink:
+                    type: string
+        4xx:
+          description: "on error"
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - errorType
+                  - errorDetail
+                properties:
+                  errorType:
+                    type: string
+                  errorDetail:
+                    type: string
+
+  /api/share-service/make-unshared:
+    post:
+      summary: make-unshared
+      tags:
+        - Shared Service
+      description:
+        "[!] `session_token` required"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - target
+              properties:
+                target:
+                  type: string
+                  example: "drive:/"
+      responses:
+        200:
+          description: "on success"
+          content:
+            text/plain:
+              example: OK
+        4xx:
+          description: "on error"
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - errorType
+                  - errorDetail
+                properties:
+                  errorType:
+                    type: string
+                  errorDetail:
+                    type: string
+
+  /share/{userName}/{sharedLink}:
+    get:
+      summary: share-route-get
+      tags:
+        - Share Route
+      parameters:
+        - name: userName
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: sharedLink
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: "on success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FsEntity'
+        4xx:
+          description: "on error"
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - errorType
+                  - errorDetail
+                properties:
+                  errorType:
+                    type: string
+                  errorDetail:
+                    type: string
+        404:
+          description: on not found
+
+  /share/{userName}/{sharedLink}/file:
+    get:
+      summary: share-route-get-file
+      tags:
+        - Share Route
+      parameters:
+        - name: userName
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: sharedLink
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: "on success"
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+                example: "binary"
+        4xx:
+          description: "on error"
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - errorType
+                  - errorDetail
+                properties:
+                  errorType:
+                    type: string
+                  errorDetail:
+                    type: string
+        404:
+          description: on not found
+
+  /api/download-service/download:
+    get:
+      summary: download
+      tags:
+        - Download Service
+      description:
+        "[!] `session_token` required"
+      parameters:
+        - name: target
+          in: query
+          schema:
+            type: string
+            example: "drive:/"
+      responses:
+        200:
+          description: "on success"
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+                example: "binary"
+        4xx:
+          description: "on error"
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - errorType
+                  - errorDetail
+                properties:
+                  errorType:
+                    type: string
+                  errorDetail:
+                    type: string
+
+
+
+
+
+
+components:
+  schemas:
+
+    FsEntity:
+      type: object
+      required:
+        - eid
+        - parentEid
+        - ownerUid
+        - name
+        - baseType
+      properties:
+        eid:
+          type: string
+        parentEid:
+          type: string
+        ownerUid:
+          type: string
+        name:
+          type: string
+        baseType:
+          type: string
+          enum:
+            - File
+            - Directory
+        mimeType:
+          type: string
+        size:
+          type: integer
+        createdAt:
+          type: string
+        modifiedAt:
+          type: string
+        isShared:
+          type: boolean
+        sharedLink:
+          type: string
+
+    UserDto:
+      type: object
+      required:
+        - uid
+        - email
+        - email
+        - spaceUsed
+        - totalSpaceAvailable
+        - isVerified
+      properties:
+        uid:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        spaceUsed:
+          type: integer
+        totalSpaceAvailable:
+          type: integer
+        isVerified:
+          type: boolean

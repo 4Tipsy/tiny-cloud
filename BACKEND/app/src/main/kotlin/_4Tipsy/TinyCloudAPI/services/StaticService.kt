@@ -9,27 +9,20 @@ import kotlin.io.path.toPath
 class StaticService {
   companion object {
 
-    private fun _getResource(i: String): String {
-      return this.javaClass.classLoader.getResource(i)!!.toURI().toPath().toAbsolutePath().toString()
-    }
-
 
 
     fun getOpenapiFile(): File {
-      val path = _getResource("openapi.yaml")
-      return File(path)
+      return File("data/openapi.yaml")
     }
 
 
     fun getRedoc(): File {
-      val path = _getResource("redoc.html")
-      return File(path)
+      return File("data/redoc.html")
     }
 
 
     fun getRapidoc(): File {
-      val path = _getResource("rapidoc.html")
-      return File(path)
+      return File("data/rapidoc.html")
     }
 
 

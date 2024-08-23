@@ -4,9 +4,7 @@ package _4Tipsy.TinyCloudAPI.routing
 
 import io.ktor.server.routing.*
 import io.ktor.server.application.call
-import io.ktor.server.application.install
 import io.ktor.server.response.*
-import io.ktor.http.HttpStatusCode
 
 
 // modules

@@ -73,7 +73,7 @@ class ShareService {
           Document("ownerUid", uid)
         ),
         // update
-        Filters.and(
+        Updates.combine(
           Updates.set("isShared", true),
           Updates.set("sharedLink", sharedLink)
         )
@@ -114,9 +114,9 @@ class ShareService {
           Document("ownerUid", uid)
         ),
         // update
-        Filters.and(
+        Updates.combine(
           Updates.set("isShared", false),
-          Updates.set("sharedLink", null)
+          Updates.unset("sharedLink")
         )
       )
 

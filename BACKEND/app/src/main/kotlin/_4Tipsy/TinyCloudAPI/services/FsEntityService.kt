@@ -133,7 +133,7 @@ class FsEntityService {
           )
         ).firstOrNull() != null
       ) {
-        throw HttpException(HttpStatusCode.BadRequest, "Name already taken", "Entity '$where/$name' already exists")
+        throw HttpException(HttpStatusCode.BadRequest, "Name already taken", "Entity '${where}${name}' already exists")
       }
 
       // if not enough space

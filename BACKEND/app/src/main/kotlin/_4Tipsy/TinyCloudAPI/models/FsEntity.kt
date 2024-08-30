@@ -18,7 +18,6 @@ enum class BaseType {
 data class FsEntity (
 
   val eid: String,
-  @Nullable
   val parentEid: String?, // null if in root
   val ownerUid: String,
 
@@ -33,7 +32,6 @@ data class FsEntity (
 
   /* is shared */
   val isShared: Boolean,
-  @Nullable
   val sharedLink: String?,
 
 )

@@ -27,7 +27,7 @@ App is made with `Kotlin` (Ktor) and MongoDB, Redis. Covered with 0 tests, but f
 
 - [Redoc](/api/redoc)
 - [Rapidoc](/api/rapidoc)
-- [Source (GitHub)](https://github.com/4Tipsy/tiny-cloud/tree/BACKEND)
+- [Source (GitHub)](https://github.com/4Tipsy/tiny-cloud/tree/main/BACKEND)
 ---
 All routes are bellow:
 """

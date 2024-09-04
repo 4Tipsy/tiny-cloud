@@ -46,7 +46,7 @@ fun Routing.downloadRouting() {
           ?: throw HttpException(HttpStatusCode.UnprocessableEntity, "Request validation error", "No 'target' param provided")
 
         val uid = AuthGuard(call)
-        val targetEid = GetValidEid(target)
+        val targetEid = GetValidEid(target, uid)
 
         val (file, fileName) = DownloadService.downloadEntity(
           target = target,

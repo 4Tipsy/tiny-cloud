@@ -13,6 +13,13 @@ class InvalidConfigException: Exception {
 
 
 
+class PseudoFsException: Exception {
+  constructor(message: String) : super(message)
+  constructor(message: String, cause: Throwable) : super(message, cause)
+}
+
+
+
 class HttpException (
   val statusCode: HttpStatusCode,
   val errorType: String,

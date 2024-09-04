@@ -28,6 +28,8 @@ import java.nio.file.StandardCopyOption
 import java.text.DecimalFormat
 
 // modules
+import _4Tipsy.TinyCloudAPI.core.PasswordHasher
+import _4Tipsy.TinyCloudAPI.utils.getSimpleHash
 import _4Tipsy.TinyCloudAPI.exceptions.HttpException
 import _4Tipsy.TinyCloudAPI.models.User
 import _4Tipsy.TinyCloudAPI.models.Session
@@ -35,9 +37,8 @@ import _4Tipsy.TinyCloudAPI.models.Refresh
 import _4Tipsy.TinyCloudAPI.dto.UserDTO
 import _4Tipsy.TinyCloudAPI.Databases
 import _4Tipsy.TinyCloudAPI.Config
-import _4Tipsy.TinyCloudAPI.REFRESH_TOKENS_TTL
-import _4Tipsy.TinyCloudAPI.utils.getSimpleHash
-import _4Tipsy.TinyCloudAPI.core.PasswordHasher
+
+
 
 
 
@@ -179,7 +180,7 @@ class UserService {
       redis.set(
         "refresh:$refreshToken",
         Json.encodeToString(refreshData),
-        SetArgs().ex(REFRESH_TOKENS_TTL)
+        SetArgs().ex( Config.load().main.refreshTtl )
       )
 
       call.application.environment.log.info("[call bellow] Opened new session: '${user.name}' > $sessionId")

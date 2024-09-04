@@ -34,7 +34,7 @@ fun StatusPagesConfig.errorHandler() {
 
       // 404
       is Basic404Exception -> {
-        call.respond(HttpStatusCode.NotFound, "Not found")
+        call.respond(HttpStatusCode.NotFound, "404!")
       }
 
       // 500

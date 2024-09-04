@@ -5,7 +5,7 @@ desk = """
 
 ### Tiny-Cloud-API is ~~small python~~ kotlin app designed to store and manage files in cloud
 
-Once small and tiny, now overcomplicated and fully overwritten...
+Once small and tiny, now overcomplicated and fully overwritten...  
 App is made with `Kotlin` (Ktor) and MongoDB, Redis. Covered with 0 tests, but fully operational!
 
 
@@ -19,8 +19,8 @@ App is made with `Kotlin` (Ktor) and MongoDB, Redis. Covered with 0 tests, but f
 **Clients:**
 
 
-- [Web Client]("")
-- [CLI]("")
+- [Web Client](http://tiny-cloud.xyz)
+- [CLI](https://github.com/4Tipsy/tiny-cloud-cli)
 
 **Links:**
 

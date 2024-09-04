@@ -4,7 +4,8 @@ package _4Tipsy.TinyCloudAPI.plugins
 
 import io.ktor.server.application.createApplicationPlugin
 import io.ktor.server.application.hooks.ResponseSent
-import io.ktor.server.request.*
+import io.ktor.server.request.httpMethod
+import io.ktor.server.request.path
 
 
 

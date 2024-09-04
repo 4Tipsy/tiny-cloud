@@ -1,8 +1,8 @@
 openapi: 3.0.0
 info:
   title: Tiny Cloud API
-  version: 2.0.0-ALPHA
-  description: "<img src=\"http://tiny-cloud.xyz/api/utils-service/uwu\" alt=\"uwu.png\">\n\n### Tiny-Cloud-API is ~~small python~~ kotlin app designed to store and manage files in cloud\n\nOnce small and tiny, now overcomplicated and fully overwritten...\nApp is made with `Kotlin` (Ktor) and MongoDB, Redis. Covered with 0 tests, but fully operational!\n\n\n---\n- Each user has default `10 GB` of free space, this number can be increased personally\n- Files and directories could be shared with outer web via `share-service`\n- Passwords are stored in hashed way, auth made as web-sessions\n\n---\n\n**Clients:**\n\n\n- [Web Client](\"\")\n- [CLI](\"\")\n\n**Links:**\n\n\n- [Redoc](/api/redoc)\n- [Rapidoc](/api/rapidoc)\n- [Source (GitHub)](https://github.com/4Tipsy/tiny-cloud/tree/BACKEND)\n---\nAll routes are bellow:\n"
+  version: 2.0.1
+  description: "\n<img src=\"http://tiny-cloud.xyz/api/utils-service/uwu\" alt=\"uwu.png\">\n\n### Tiny-Cloud-API is ~~small python~~ kotlin app designed to store and manage files in cloud\n\nOnce small and tiny, now overcomplicated and fully overwritten...  \nApp is made with `Kotlin` (Ktor) and MongoDB, Redis. Covered with 0 tests, but fully operational!\n\n\n---\n- Each user has default `10 GB` of free space, this number can be increased personally\n- Files and directories could be shared with outer web via `share-service`\n- Passwords are stored in hashed way, auth made as web-sessions\n\n---\n\n**Clients:**\n\n\n- [Web Client](http://tiny-cloud.xyz)\n- [CLI](https://github.com/4Tipsy/tiny-cloud-cli)\n\n**Links:**\n\n\n- [Redoc](/api/redoc)\n- [Rapidoc](/api/rapidoc)\n- [Source (GitHub)](https://github.com/4Tipsy/tiny-cloud/tree/main/BACKEND)\n---\nAll routes are bellow:\n"
 
 
 
@@ -523,6 +523,38 @@ paths:
                   errorDetail:
                     type: string
 
+  /api/share-service/get-all-shared-entities:
+    get:
+      summary: get-all-shared-entities
+      tags:
+        - Shared Service
+      description:
+        "[!] `session_token` required"
+      responses:
+        200:
+          description: "on success"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FsEntityWithPathDTO'
+        4xx:
+          description: "on error"
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - errorType
+                  - errorDetail
+                properties:
+                  errorType:
+                    type: string
+                  errorDetail:
+                    type: string
+
+
   /share/{userName}/{sharedLink}:
     get:
       summary: share-route-get
@@ -659,6 +691,45 @@ components:
         - name
         - baseType
       properties:
+        eid:
+          type: string
+        parentEid:
+          type: string
+        ownerUid:
+          type: string
+        name:
+          type: string
+        baseType:
+          type: string
+          enum:
+            - File
+            - Directory
+        mimeType:
+          type: string
+        size:
+          type: integer
+        createdAt:
+          type: string
+        modifiedAt:
+          type: string
+        isShared:
+          type: boolean
+        sharedLink:
+          type: string
+
+
+    FsEntityWithPathDTO:
+      type: object
+      required:
+        - _pseudoFsPath
+        - eid
+        - parentEid
+        - ownerUid
+        - name
+        - baseType
+      properties:
+        _pseudoFsPath:
+          type: string
         eid:
           type: string
         parentEid:

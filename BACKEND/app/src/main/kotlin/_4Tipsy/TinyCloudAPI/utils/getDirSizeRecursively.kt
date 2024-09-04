@@ -12,10 +12,11 @@ import kotlinx.coroutines.flow.toList
 import _4Tipsy.TinyCloudAPI.models.FsEntity
 import _4Tipsy.TinyCloudAPI.models.BaseType
 import _4Tipsy.TinyCloudAPI.Databases
+import _4Tipsy.TinyCloudAPI.core.PseudoFs // extendable
 
 
 
-suspend fun getDirSizeRecursively(eid: String, uid: String): Long {
+suspend fun PseudoFs.Companion.getDirSizeRecursively(eid: String, uid: String): Long {
 
   val _fsEntitiesCollection = Databases.mongo!!.getCollection<FsEntity>("fsEntities")
   var totalSize: Long = 0

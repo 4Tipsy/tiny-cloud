@@ -40,7 +40,7 @@ fun Routing.fsRouting() {
         val uid = AuthGuard(call) // AUTH NEEDED
 
         val body = call.receiveValid<RequestBody>()
-        val whereEid = GetValidEid(body.where)
+        val whereEid = GetValidEid(body.where, uid)
 
         val contents = FsEntityService.getDirContents(
           where = body.where,
@@ -72,7 +72,7 @@ fun Routing.fsRouting() {
         val uid = AuthGuard(call) // AUTH NEEDED
 
         val body = call.receiveValid<RequestBody>()
-        val whereEid = GetValidEid(body.where)
+        val whereEid = GetValidEid(body.where, uid)
 
 
         FsEntityService.createNewDir(
@@ -109,7 +109,7 @@ fun Routing.fsRouting() {
         val uid = AuthGuard(call) // AUTH NEEDED
 
         val body = call.receiveValid<RequestBody>()
-        val targetEid = GetValidEid(body.target)!!
+        val targetEid = GetValidEid(body.target, uid)!!
 
         FsEntityService.renameEntity(
           target = body.target,
@@ -140,7 +140,7 @@ fun Routing.fsRouting() {
         val uid = AuthGuard(call) // AUTH NEEDED
 
         val body = call.receiveValid<RequestBody>()
-        val targetEid = GetValidEid(body.target)!!
+        val targetEid = GetValidEid(body.target, uid)!!
 
         FsEntityService.deleteEntity(
           target = body.target,

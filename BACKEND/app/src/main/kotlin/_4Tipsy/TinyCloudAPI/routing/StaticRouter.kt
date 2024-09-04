@@ -22,14 +22,7 @@ fun Routing.staticRouting() {
     }
   }
 
-  route("/api/redoc") {
-    get {
-      val file = StaticService.getRedoc()
-      call.respondFile(file)
-    }
-  }
-
-  route("/api/rapidoc") {
+  route("/api/docs") {
     get {
       val file = StaticService.getRapidoc()
       call.respondFile(file)

@@ -16,10 +16,6 @@ class StaticService {
     }
 
 
-    fun getRedoc(): File {
-      return File("data/redoc.html")
-    }
-
 
     fun getRapidoc(): File {
       return File("data/rapidoc.html")

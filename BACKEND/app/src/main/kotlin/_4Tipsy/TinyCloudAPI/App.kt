@@ -28,9 +28,7 @@ import _4Tipsy.TinyCloudAPI.routing.staticRouting
 
 
 /* main */
-const val API_VERSION = "2.0.0-ALPHA"
-const val REFRESH_TOKENS_TTL: Long = 60*60*24*30 // in sec
-
+const val API_VERSION = "2.0.1"
 fun main() {
   Databases.lifeCheck() // lifeCheck db's
   embeddedServer(

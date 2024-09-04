@@ -14,9 +14,12 @@ import java.io.File
 
 
 // modules
+import _4Tipsy.TinyCloudAPI.core.PseudoFs
 import _4Tipsy.TinyCloudAPI.models.FsEntity
 import _4Tipsy.TinyCloudAPI.models.BaseType
 import _4Tipsy.TinyCloudAPI.models.User
+import _4Tipsy.TinyCloudAPI.dto.FsEntityWithPathDTO
+import _4Tipsy.TinyCloudAPI.dto.addPseudoPath
 import _4Tipsy.TinyCloudAPI.exceptions.HttpException
 import _4Tipsy.TinyCloudAPI.exceptions.Basic404Exception
 import _4Tipsy.TinyCloudAPI.utils.getSimpleHash
@@ -128,14 +131,18 @@ class ShareService {
     /*
     * getAllSharedEntities
     */
-    suspend fun getAllSharedEntities(uid: String): List<FsEntity> {
+    suspend fun getAllSharedEntities(uid: String): List<FsEntityWithPathDTO> {
 
-      val contents = fsEntityCollection.find(
+      val _contents = fsEntityCollection.find(
         Filters.and(
           Document("ownerUid", uid),
           Document("isShared", true)
         )
       ).toList()
+
+      val contents = _contents.map {
+        it.addPseudoPath( PseudoFs.eidToPath(it.eid, it.ownerUid) )
+      }
 
       return contents
 
@@ -185,7 +192,7 @@ class ShareService {
     * getSharedEntityDownload
     */
     @Throws(Basic404Exception::class, HttpException::class)
-    suspend fun getSharedEntityDownload(sharedLink: String?, userName: String?): Pair<File, String> {
+    suspend fun getSharedEntityDownloadable(sharedLink: String?, userName: String?): Pair<File, String> {
 
       // if no parameters provided
       if (sharedLink==null || userName==null) throw Basic404Exception()

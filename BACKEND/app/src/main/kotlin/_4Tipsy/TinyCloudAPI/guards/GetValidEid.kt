@@ -4,55 +4,29 @@ package _4Tipsy.TinyCloudAPI.guards
 
 import io.ktor.http.HttpStatusCode
 
-import com.mongodb.client.model.Filters
-import org.bson.Document
-import kotlinx.coroutines.flow.firstOrNull
-
 import kotlin.jvm.Throws
 
 
 // modules
-import _4Tipsy.TinyCloudAPI.models.FsEntity
+import _4Tipsy.TinyCloudAPI.core.PseudoFs
+import _4Tipsy.TinyCloudAPI.exceptions.PseudoFsException
 import _4Tipsy.TinyCloudAPI.exceptions.HttpException
-import _4Tipsy.TinyCloudAPI.Databases
 
 
 
 @Throws(HttpException::class)
-suspend fun GetValidEid(path: String): String? {
-  val _fsEntityCollection = Databases.mongo!!.getCollection<FsEntity>("fsEntities")
+suspend fun GetValidEid(path: String, uid: String): String? {
 
 
-  if (!path.startsWith("drive:")) throw HttpException(HttpStatusCode.UnprocessableEntity, "Wrong target path", "Path should be specified with 'drive:'")
-  if (!path.startsWith("drive:/")) throw HttpException(HttpStatusCode.UnprocessableEntity, "Wrong target path", "Path should be absolute (start with '/')")
-
-  val _path = path.removePrefix("drive:/")
-  val pathSegments = _path.split('/').filter { it.isNotEmpty() }
-
-  // if "drive:/" // related to `where` params
-  if (pathSegments.isEmpty()) return null
+  // get eid
+  try {
+    val targetEid = PseudoFs.pathToEid(path, uid)
+    return targetEid
 
 
-  // PATH -> EID
-  var wherePath = "drive:"
-  var hereEid: String? = null
-  for (segment in pathSegments) {
-    wherePath += "/$segment"
-
-    // try to get next entity
-    val entity = _fsEntityCollection.find(
-      Filters.and(
-        Document("name", segment),
-        Document("parentEid", hereEid)
-      )
-    ).firstOrNull()
-
-    // if no such entity
-    if (entity == null) throw HttpException(HttpStatusCode.BadRequest, "No such entity", "There is no entity on path '$wherePath'")
-
-    hereEid = entity.eid
+  // if no such entity
+  } catch (exc: PseudoFsException) {
+    throw HttpException(HttpStatusCode.BadRequest, "Wrong target path", exc.message!!)
   }
 
-
-  return hereEid
 }

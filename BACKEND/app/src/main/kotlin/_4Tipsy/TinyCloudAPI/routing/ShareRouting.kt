@@ -42,7 +42,7 @@ fun Routing.shareRouting() {
         val uid = AuthGuard(call) // AUTH NEEDED
 
         val body = call.receiveValid<RequestBody>()
-        val targetEid = GetValidEid(body.target)
+        val targetEid = GetValidEid(body.target, uid)
 
         val sharedLink = ShareService.makeShared(
           target = body.target,
@@ -72,7 +72,7 @@ fun Routing.shareRouting() {
         val uid = AuthGuard(call) // AUTH NEEDED
 
         val body = call.receiveValid<RequestBody>()
-        val targetEid = GetValidEid(body.target)
+        val targetEid = GetValidEid(body.target, uid)
 
         ShareService.makeUnshared(
           target = body.target,
@@ -87,7 +87,26 @@ fun Routing.shareRouting() {
 
 
 
+
+    /* ROUTE */
+    route("/get-all-shared-entities") {
+
+      // handler
+      get {
+        val uid = AuthGuard(call)
+
+        val contents = ShareService.getAllSharedEntities(
+          uid = uid
+        )
+
+        call.respond(contents)
+      }
+    }
+
+
+
   }
+
 
 
   route("/share/{userName}/{sharedLink}") {
@@ -108,7 +127,7 @@ fun Routing.shareRouting() {
       install(PartialContent) // set as streaming
       get {
 
-        val (file, fileName) = ShareService.getSharedEntityDownload(
+        val (file, fileName) = ShareService.getSharedEntityDownloadable(
           sharedLink = call.parameters.get("sharedLink"),
           userName = call.parameters.get("userName")
         )

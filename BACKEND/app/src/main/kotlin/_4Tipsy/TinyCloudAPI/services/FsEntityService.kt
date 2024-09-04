@@ -22,6 +22,7 @@ import java.nio.file.Files
 
 
 // modules
+import _4Tipsy.TinyCloudAPI.core.PseudoFs
 import _4Tipsy.TinyCloudAPI.exceptions.HttpException
 import _4Tipsy.TinyCloudAPI.models.FsEntity
 import _4Tipsy.TinyCloudAPI.models.BaseType
@@ -251,7 +252,7 @@ class FsEntityService {
       // change `user.spaceUsed`
       val deletedSize = when (fsEntity.baseType) {
         BaseType.File -> fsEntity.size!!
-        BaseType.Directory -> getDirSizeRecursively(_targetEid, uid)
+        BaseType.Directory -> PseudoFs.getDirSizeRecursively(_targetEid, uid)
       }
       userCollection.updateOne(
         Document("uid", uid),

@@ -99,7 +99,7 @@ fun Route._uploadFile() {
       if (_fileSize == null) throw HttpException(HttpStatusCode.LengthRequired, "Validation error", "Please provide Content-Length header")
 
       // call service!
-      val whereUid = GetValidEid(body!!.where)
+      val whereUid = GetValidEid(body!!.where, uid)
       FsEntityService.uploadFile(
         where = body!!.where,
         _whereEid = whereUid,

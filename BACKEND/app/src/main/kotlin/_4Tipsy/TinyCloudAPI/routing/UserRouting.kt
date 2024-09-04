@@ -6,12 +6,7 @@ import io.ktor.server.routing.*
 import io.ktor.server.application.call
 import io.ktor.server.response.*
 import io.ktor.server.request.*
-import io.ktor.http.content.forEachPart
-import io.ktor.http.content.PartData
-import io.ktor.http.content.streamProvider
 import io.ktor.http.*
-
-import java.io.InputStream
 
 import kotlinx.serialization.Serializable
 
@@ -21,7 +16,6 @@ import _4Tipsy.TinyCloudAPI.services.UserService
 import _4Tipsy.TinyCloudAPI.guards.AuthGuard
 import _4Tipsy.TinyCloudAPI.core.receiveValid
 import _4Tipsy.TinyCloudAPI.Config
-import _4Tipsy.TinyCloudAPI.REFRESH_TOKENS_TTL
 
 
 
@@ -81,7 +75,7 @@ fun Routing.userRouting() {
 
         // if ok
         call.response.cookies.append("session_token", sessionId, maxAge = Config.load().main.sessionTtl, path = "/")
-        call.response.cookies.append("refresh_token", refreshToken, maxAge = REFRESH_TOKENS_TTL, path = "/api/user-service/refresh-token")
+        call.response.cookies.append("refresh_token", refreshToken, maxAge = Config.load().main.refreshTtl, path = "/api/user-service/refresh-token")
         call.respond("OK")
       }
     }
@@ -109,7 +103,7 @@ fun Routing.userRouting() {
 
         // if ok
         call.response.cookies.append("session_token", newSessionId, maxAge = Config.load().main.sessionTtl)
-        call.response.cookies.append("refresh_token", newRefreshToken, maxAge = REFRESH_TOKENS_TTL, path = "/api/user-service/refresh-token")
+        call.response.cookies.append("refresh_token", newRefreshToken, maxAge = Config.load().main.refreshTtl, path = "/api/user-service/refresh-token")
         call.respond("OK")
       }
     }

@@ -33,6 +33,8 @@ data class ConfigModel (
     val userImageMaxSize: Long,
     @SerialName("session_ttl")
     val sessionTtl: Long,
+    @SerialName("refresh_ttl")
+    val refreshTtl: Long,
   )
   @Serializable
   data class Fs (

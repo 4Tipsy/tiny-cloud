@@ -146,6 +146,7 @@ fun Routing.userRouting() {
         )
 
         // if ok
+        call.response.headers.append(HttpHeaders.ContentDisposition, "attachment; filename=\"user_image\"")
         call.respondFile(userImageFile)
       }
     }

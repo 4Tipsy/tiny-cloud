@@ -104,7 +104,7 @@ class PseudoFs {
 
         } else {
           // // if entity is in root
-          whereNow = "drive:" + whereNow
+          whereNow = "drive:/" + entity.name + whereNow
           break
         }
 

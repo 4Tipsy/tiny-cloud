@@ -443,7 +443,7 @@ paths:
     post:
       summary: make-shared
       tags:
-        - Shared Service
+        - Share Service
       description:
         "[!] `session_token` required"
       requestBody:
@@ -488,7 +488,7 @@ paths:
     post:
       summary: make-unshared
       tags:
-        - Shared Service
+        - Share Service
       description:
         "[!] `session_token` required"
       requestBody:
@@ -527,7 +527,7 @@ paths:
     get:
       summary: get-all-shared-entities
       tags:
-        - Shared Service
+        - Share Service
       description:
         "[!] `session_token` required"
       responses:

@@ -28,7 +28,7 @@ import _4Tipsy.TinyCloudAPI.routing.staticRouting
 
 
 /* main */
-const val API_VERSION = "2.0.1"
+const val API_VERSION = "2.1.0" // also in openapi.yaml
 fun main() {
   Databases.lifeCheck() // lifeCheck db's
   embeddedServer(
@@ -51,6 +51,9 @@ fun Application.mainModule() {
   install(StatusPages) {
     errorHandler()
   }
+  //install(RateLimit) {
+  //  globalRateLimit()
+  //}
   install(DefaultHeaders) {
     header("X-Tiny-Cloud-Version", "API v$API_VERSION")
   }

@@ -8,9 +8,9 @@ session_ttl = 43200 # 12h # in sec
 refresh_ttl = 2592000 # 1 month # in sec
 
 [Config.fs]
-default_user_image_path = "/some/abs/path" # abs pathes!!!
-file_storage_path = "/some/abs/path/" # abs pathes!!!
-critical_total_used_space = 4_000_000 # in bytes
+default_user_image_path = "/some/abs/path/@file" # abs pathes!!!
+file_storage_path = "/some/abs/path/@storage" # abs pathes!!!
+cache_dir_path = "/some/abs/path/@cache" # abs pathes!!!
 
 [Config.databases]
 mongo_db_uri = "mongodb://localhost:27017"

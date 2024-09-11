@@ -177,9 +177,9 @@ class ShareService {
 
       // hide some vars
       var _fsEntity = fsEntity.copy(
-        eid = "<hidden>",
-        parentEid = "<hidden>",
-        ownerUid = "<hidden>"
+        eid = "hidden",
+        parentEid = "hidden",
+        ownerUid = "hidden"
       )
       return _fsEntity
     }
@@ -189,7 +189,7 @@ class ShareService {
 
 
     /*
-    * getSharedEntityDownload
+    * getSharedEntityDownloadable
     */
     @Throws(Basic404Exception::class, HttpException::class)
     suspend fun getSharedEntityDownloadable(sharedLink: String?, userName: String?): Pair<File, String> {
@@ -197,7 +197,7 @@ class ShareService {
       // if no parameters provided
       if (sharedLink==null || userName==null) throw Basic404Exception()
 
-      // userName to uid
+      // get user
       val user = userCollection.find( Document("name", userName) ).firstOrNull()
       if (user == null) throw Basic404Exception() // if no user
 
@@ -212,12 +212,16 @@ class ShareService {
       // if no such entity
       if (fsEntity == null) throw Basic404Exception()
 
-      // if dir
-      if (fsEntity.baseType == BaseType.Directory) throw HttpException(HttpStatusCode.BadRequest, "Not supported", "Right now, only files are downloadable")
+      // download
+      if (fsEntity.baseType == BaseType.Directory) {
+        val arcFile = PseudoFs.retrieveDirAsTempArc(fsEntity.eid, user.uid)
+        return Pair(arcFile, fsEntity.name)
+      }
+      else {
+        val file = listOf(FILE_STORAGE, user.uid, "@files", fsEntity.eid).joinToString(File.separator).let { File(it) }
+        return Pair(file, fsEntity.name)
+      }
 
-      // if file
-      val localFilePath = listOf(FILE_STORAGE, user.uid, "@files", fsEntity.eid).joinToString(File.separator)
-      return Pair( File(localFilePath), fsEntity.name)
     }
 
 

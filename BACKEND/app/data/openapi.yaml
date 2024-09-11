@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Tiny Cloud API
-  version: 2.0.1
+  version: 2.1.0
   description: "\n<img src=\"http://tiny-cloud.xyz/api/utils-service/uwu\" alt=\"uwu.png\">\n\n### Tiny-Cloud-API is ~~small python~~ kotlin app designed to store and manage files in cloud\n\nOnce small and tiny, now overcomplicated and fully overwritten...  \nApp is made with `Kotlin` (Ktor) and MongoDB, Redis. Covered with 0 tests, but fully operational!\n\n\n---\n- Each user has default `10 GB` of free space, this number can be increased personally\n- Files and directories could be shared with outer web via `share-service`\n- Passwords are stored in hashed way, auth made as web-sessions\n\n---\n\n**Clients:**\n\n\n- [Web Client](http://tiny-cloud.xyz)\n- [CLI](https://github.com/4Tipsy/tiny-cloud-cli)\n\n**Links:**\n\n\n- [Redoc](/api/redoc)\n- [Rapidoc](/api/rapidoc)\n- [Source (GitHub)](https://github.com/4Tipsy/tiny-cloud/tree/main/BACKEND)\n---\nAll routes are bellow:\n"
 
 

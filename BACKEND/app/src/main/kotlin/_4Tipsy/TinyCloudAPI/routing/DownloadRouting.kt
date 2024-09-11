@@ -10,7 +10,7 @@ import io.ktor.server.application.call
 import io.ktor.server.application.install
 import io.ktor.server.plugins.partialcontent.PartialContent
 
-
+import java.nio.file.Files
 
 // modules
 import _4Tipsy.TinyCloudAPI.services.DownloadService
@@ -57,6 +57,9 @@ fun Routing.downloadRouting() {
         // if ok
         call.response.headers.append(HttpHeaders.ContentDisposition, "attachment; filename=\"$fileName\"")
         call.respondFile(file)
+
+        // cleanup (if it was retrieved dir)
+        if (file.name.endsWith(".tmp")) Files.delete(file.toPath()) // `file.name`, not `fileName`
       }
     }
 

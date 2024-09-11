@@ -42,8 +42,8 @@ data class ConfigModel (
     val defaultUserImagePath: String,
     @SerialName("file_storage_path")
     val fileStoragePath: String,
-    @SerialName("critical_total_used_space")
-    val criticalTotalUsedSpace: Long,
+    @SerialName("cache_dir_path")
+    val cacheDirPath: String,
   )
   @Serializable
   data class Databases (
@@ -93,6 +93,9 @@ object Config {
       }
       if ( !File(this.instance!!.fs.defaultUserImagePath).exists() ) {
         throw InvalidConfigException("Config.fs.default_user_image_path ('${this.instance!!.fs.defaultUserImagePath}') should exist")
+      }
+      if ( !File(this.instance!!.fs.cacheDirPath).exists() ) {
+        throw InvalidConfigException("Config.fs.cache_dir_path ('${this.instance!!.fs.cacheDirPath}') should exist")
       }
     }
 

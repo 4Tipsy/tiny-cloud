@@ -21,7 +21,7 @@ import { User } from "../../models/User"
 const AsideMenu = () => {
 
 
-  const [showAside, setShowAside] = useState(true)
+  const [showAside, setShowAside] = useState(false)
   const [collection, setCollection] = useAtom(collectionAtom)
 
 

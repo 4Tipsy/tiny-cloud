@@ -96,7 +96,7 @@ const AudioPlayer = ({entityEid}: {entityEid: string}) => {
         <>
           <div className="max-w-[70%] max-h-[70%] tablet:w-[40%] tablet:h-[40%] desktop:w-[40%] desktop:h-[40%] center-div flex-col"
           onClick={e => e.stopPropagation()}>
-            <FAI className="aspect-square w-[50%] h-[50%]" icon={"fa-file-audio fa-solid" as IconProp} />
+            <FAI className="aspect-square w-[50%] !h-[50%]" icon={"fa-file-audio fa-solid" as IconProp} />
 
 
             <div className="player bg-shading w-full desktop:w-[80%] p-4  flex flex-col items-center gap-2  mt-6"

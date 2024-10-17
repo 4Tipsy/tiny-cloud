@@ -13,7 +13,9 @@ import _4Tipsy.TinyCloudAPI.Config
 fun CORSConfig.applyConfiguredCors() {
 
   // allow client requests
-  allowHost(Config.load().main.clientUrl, subDomains = listOf("share"))
+  Config.load().main.allowedHosts.forEach {
+    allowHost(it, schemes = listOf("http", "https"))
+  }
   allowCredentials = true
 
   allowHeader(HttpHeaders.ContentType)

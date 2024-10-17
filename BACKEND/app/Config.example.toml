@@ -2,7 +2,7 @@
 [Config.main]
 port = 1234
 host = "0.0.0.0"
-client_url = "https://first.example.com"
+allowed_hosts = ["first.example.com", "second.example.com"]
 new_user_space_available = 10_000_000_000 # in bytes
 user_image_max_size = 2_000_000 # in bytes
 session_ttl = 43200 # 12h # in sec

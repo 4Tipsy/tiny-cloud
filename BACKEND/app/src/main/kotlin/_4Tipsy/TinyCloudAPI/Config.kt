@@ -27,8 +27,10 @@ data class ConfigModel (
   data class Main (
     val port: Int,
     val host: String,
-    @SerialName("allowed_hosts")
-    val allowedHosts: List<String>,
+    @SerialName("client_url")
+    val clientUrl: String,
+    //@SerialName("allowed_hosts")
+    //val allowedHosts: List<String>,
     @SerialName("new_user_space_available")
     val newUserSpaceAvailable: Long,
     @SerialName("user_image_max_size")

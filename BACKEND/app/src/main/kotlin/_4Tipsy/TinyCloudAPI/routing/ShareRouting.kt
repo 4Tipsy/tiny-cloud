@@ -20,7 +20,7 @@ import _4Tipsy.TinyCloudAPI.core.receiveValid
 
 
 fun Routing.shareRouting() {
-  route("/api/share-service") {
+  route("/share-service") {
 
 
 

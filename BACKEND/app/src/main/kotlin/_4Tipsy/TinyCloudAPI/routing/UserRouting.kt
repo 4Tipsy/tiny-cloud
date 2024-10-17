@@ -21,7 +21,7 @@ import _4Tipsy.TinyCloudAPI.Config
 
 
 fun Routing.userRouting() {
-  route("/api/user-service") {
+  route("/user-service") {
 
 
 

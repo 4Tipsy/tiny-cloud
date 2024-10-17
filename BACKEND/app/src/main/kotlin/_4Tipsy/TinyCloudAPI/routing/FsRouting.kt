@@ -20,7 +20,7 @@ import _4Tipsy.TinyCloudAPI.core.receiveValid
 
 
 fun Routing.fsRouting() {
-  route("/api/fs-service") {
+  route("/fs-service") {
 
 
 

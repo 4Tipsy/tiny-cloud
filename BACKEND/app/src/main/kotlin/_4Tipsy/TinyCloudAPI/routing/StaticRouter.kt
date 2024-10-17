@@ -15,14 +15,14 @@ import _4Tipsy.TinyCloudAPI.services.StaticService
 
 fun Routing.staticRouting() {
 
-  route("/api/openapi.yaml") {
+  route("/openapi.yaml") {
     get {
       val file = StaticService.getOpenapiFile()
       call.respondFile(file)
     }
   }
 
-  route("/api/docs") {
+  route("/docs") {
     get {
       val file = StaticService.getRapidoc()
       call.respondFile(file)

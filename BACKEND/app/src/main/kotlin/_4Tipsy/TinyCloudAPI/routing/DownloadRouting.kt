@@ -22,7 +22,7 @@ import _4Tipsy.TinyCloudAPI.exceptions.HttpException
 
 
 fun Routing.downloadRouting() {
-  route("/api/download-service") {
+  route("/download-service") {
 
 
 

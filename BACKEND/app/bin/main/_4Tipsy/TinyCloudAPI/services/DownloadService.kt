@@ -36,7 +36,7 @@ class DownloadService {
       // downloading ROOT
       if (_targetEid == null) {
         val arcFile = PseudoFs.retrieveDirAsTempArc(_targetEid, uid)
-        return Pair(arcFile, "root.zip")
+        return Pair(arcFile, "@root.zip")
       }
 
 
@@ -57,7 +57,7 @@ class DownloadService {
       }
       else {
         val arcFile = PseudoFs.retrieveDirAsTempArc(_targetEid, uid)
-        return Pair(arcFile, fsEntity.name + ".zip")
+        return Pair(arcFile, fsEntity.name)
       }
     }
 

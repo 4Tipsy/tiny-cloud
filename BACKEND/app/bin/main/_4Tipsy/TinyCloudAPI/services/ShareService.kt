@@ -177,9 +177,9 @@ class ShareService {
 
       // hide some vars
       var _fsEntity = fsEntity.copy(
-        eid = "<hidden>",
-        parentEid = "<hidden>",
-        ownerUid = "<hidden>"
+        eid = "hidden",
+        parentEid = "hidden",
+        ownerUid = "hidden"
       )
       return _fsEntity
     }

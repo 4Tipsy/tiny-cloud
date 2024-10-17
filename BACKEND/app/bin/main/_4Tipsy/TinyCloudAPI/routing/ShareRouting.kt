@@ -133,13 +133,11 @@ fun Routing.shareRouting() {
         )
 
         // if ok
-        try {
-          call.response.headers.append(HttpHeaders.ContentDisposition, "attachment; filename=\"$fileName\"")
-          call.respondFile(file)
-        } finally {
-          // cleanup (if it was retrieved dir)
-          if (file.name.endsWith(".tmp")) file.delete() // `file.name`, not `fileName`
-        }
+        call.response.headers.append(HttpHeaders.ContentDisposition, "attachment; filename=\"$fileName\"")
+        call.respondFile(file)
+
+        // cleanup (if it was retrieved dir)
+        if (file.name.endsWith(".tmp")) file.delete() // `file.name`, not `fileName`
       }
     }
 

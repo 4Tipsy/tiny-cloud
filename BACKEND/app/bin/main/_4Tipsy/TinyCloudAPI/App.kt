@@ -7,7 +7,6 @@ import io.ktor.server.netty.Netty
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
 
-import io.ktor.server.plugins.cors.routing.CORS
 import io.ktor.server.plugins.statuspages.StatusPages
 import io.ktor.server.plugins.defaultheaders.DefaultHeaders
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
@@ -18,7 +17,6 @@ import io.ktor.serialization.kotlinx.json.json
 
 
 // modules
-import _4Tipsy.TinyCloudAPI.plugins.applyConfiguredCors
 import _4Tipsy.TinyCloudAPI.plugins.errorHandler
 import _4Tipsy.TinyCloudAPI.plugins.OnCallLoggingPlugin
 import _4Tipsy.TinyCloudAPI.plugins.globalRateLimit
@@ -50,9 +48,6 @@ fun Application.mainModule() {
   install(ContentNegotiation) {
     json()
   }
-  install(CORS) {
-    applyConfiguredCors()
-  }
   install(StatusPages) {
     errorHandler()
   }
@@ -61,7 +56,6 @@ fun Application.mainModule() {
   //}
   install(DefaultHeaders) {
     header("X-Tiny-Cloud-Version", "API v$API_VERSION")
-    header("X-_by_4Tipsy", "<3")
   }
   install(AutoHeadResponse)
   install(OnCallLoggingPlugin())

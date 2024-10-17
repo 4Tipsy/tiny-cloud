@@ -24,31 +24,6 @@ fun Routing.fsRouting() {
 
 
 
-    /* ROUTE */
-    route("/get-entity-by-eid") {
-
-      // models
-      @Serializable
-      data class RequestBody (
-        val targetEid: String,
-      )
-
-      // handler
-      post {
-        val uid = AuthGuard(call) // AUTH NEEDED
-
-        val body = call.receiveValid<RequestBody>()
-
-        val entity = FsEntityService.getEntityByEid(
-          eid = body.targetEid,
-          uid = uid
-        )
-
-        call.respond(entity)
-      }
-    }
-
-
 
 
     /* ROUTE */

@@ -45,25 +45,6 @@ class FsEntityService {
 
 
     /*
-    * getEntityByEid
-    */
-    @Throws(HttpException::class)
-    suspend fun getEntityByEid(eid: String, uid: String): FsEntity {
-      val entity = fsEntityCollection.find(
-        Filters.and(
-          Document("eid", eid),
-          Document("ownerUid", uid)
-        )
-      ).firstOrNull()
-
-      if (entity == null) throw HttpException(HttpStatusCode.BadRequest, "No such entity", "There is no entity with EID '$eid'")
-
-      return entity
-    }
-
-
-
-    /*
     * getDirContents
     */
     @Throws(HttpException::class)

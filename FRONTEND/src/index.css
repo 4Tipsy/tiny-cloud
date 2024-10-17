@@ -1,0 +1,56 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+
+/* some vars that should be global (it's convenient) */
+:root {
+  --header-height: 13vh;
+}
+
+
+body {
+  max-width: 100vw;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+
+.center-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+
+
+/* font kit */
+@font-face {
+  font-family: "CrimsonText Regular";
+  src: url(./assets/fonts/CrimsonText/CrimsonText-Regular.ttf);
+}
+@font-face {
+  font-family: "CrimsonText SemiBold";
+  src: url(./assets/fonts/CrimsonText/CrimsonText-SemiBold.ttf);
+}
+@font-face {
+  font-family: "CrimsonText Bold";
+  src: url(./assets/fonts/CrimsonText/CrimsonText-Bold.ttf);
+}
+@font-face {
+  font-family: "CrimsonText Regular Italic";
+  src: url(./assets/fonts/CrimsonText/CrimsonText-Italic.ttf);
+}
+@font-face {
+  font-family: "CrimsonText SemiBold Italic";
+  src: url(./assets/fonts/CrimsonText/CrimsonText-SemiBoldItalic.ttf);
+}
+@font-face {
+  font-family: "CrimsonText Bold Italic";
+  src: url(./assets/fonts/CrimsonText/CrimsonText-BoldItalic.ttf);
+}

@@ -86,7 +86,7 @@ const FsEntity_card = ({entity, REFRESH_FS}: {entity: FsEntity, REFRESH_FS: Func
       onClick={_ => handleClick()}
     >
 
-      <div className="aspect-square w-[90%] center-div">
+      <div className="aspect-square w-[90%] h-[60%] center-div">
         <FsEntity_ico_ className="w-[80%] !h-[80%] object-cover" e={entity} />
       </div>
 

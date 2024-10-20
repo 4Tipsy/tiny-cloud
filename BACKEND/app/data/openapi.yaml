@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Tiny Cloud API
-  version: 2.1.0
+  version: 2.1.1
   description: "\n<img src=\"http://tiny-cloud.xyz/api/utils-service/uwu\" alt=\"uwu.png\">\n\n### Tiny-Cloud-API is ~~small python~~ kotlin app designed to store and manage files in cloud\n\nOnce small and tiny, now overcomplicated and fully overwritten...  \nApp is made with `Kotlin` (Ktor) and MongoDB, Redis. Covered with 0 tests, but fully operational!\n\n\n---\n- Each user has default `10 GB` of free space, this number can be increased personally\n- Files and directories could be shared with outer web via `share-service`\n- Passwords are stored in hashed way, auth made as web-sessions\n\n---\n\n**Clients:**\n\n\n- [Web Client](http://tiny-cloud.xyz)\n- [CLI](https://github.com/4Tipsy/tiny-cloud-cli)\n\n**Links:**\n\n\n- [Redoc](/api/redoc)\n- [Rapidoc](/api/rapidoc)\n- [Source (GitHub)](https://github.com/4Tipsy/tiny-cloud/tree/main/BACKEND)\n---\nAll routes are bellow:\n"
 
 
@@ -9,7 +9,7 @@ info:
 
 paths:
 
-  /api/user-service/create-new-user:
+  /user-service/create-new-user:
     post:
       summary: create-new-user
       tags:
@@ -51,7 +51,7 @@ paths:
                   errorDetail:
                     type: string
 
-  /api/user-service/login:
+  /user-service/login:
     post:
       summary: login
       tags:
@@ -92,7 +92,7 @@ paths:
                   errorDetail:
                     type: string
 
-  /api/user-service/refresh-session:
+  /user-service/refresh-session:
     get:
       summary: refresh-session
       tags:
@@ -120,7 +120,7 @@ paths:
                   errorDetail:
                     type: string
 
-  /api/user-service/get-current-user:
+  /user-service/get-current-user:
     get:
       summary: get-current-user
       tags:
@@ -149,7 +149,7 @@ paths:
                   errorDetail:
                     type: string
 
-  /api/user-service/get-user-image:
+  /user-service/get-user-image:
     get:
       summary: get-user-image
       tags:
@@ -178,7 +178,7 @@ paths:
                   errorDetail:
                     type: string
 
-  /api/user-service/update-user-image:
+  /user-service/update-user-image:
     post:
       summary: update-user-image
       tags:
@@ -217,7 +217,46 @@ paths:
                   errorDetail:
                     type: string
 
-  /api/fs-service/get-dir-contents:
+  /fs-service/get-entity-by-eid:
+    post:
+      summary: get-entity-by-eid
+      tags:
+        - Fs Service
+      description:
+        "[!] `session_token` required"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - targetEid
+              properties:
+                targetEid:
+                  type: string
+      responses:
+        200:
+          description: "on success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FsEntity'
+        4xx:
+          description: "on error"
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - errorType
+                  - errorDetail
+                properties:
+                  errorType:
+                    type: string
+                  errorDetail:
+                    type: string
+
+  /fs-service/get-dir-contents:
     post:
       summary: get-dir-contents
       tags:
@@ -259,7 +298,7 @@ paths:
                   errorDetail:
                     type: string
 
-  /api/fs-service/create-new-dir:
+  /fs-service/create-new-dir:
     post:
       summary: create-new-dir
       tags:
@@ -301,7 +340,7 @@ paths:
                   errorDetail:
                     type: string
 
-  /api/fs-service/upload-file:
+  /fs-service/upload-file:
     post:
       summary: upload-file
       tags:
@@ -358,7 +397,7 @@ paths:
                   errorDetail:
                     type: string
 
-  /api/fs-service/rename-entity:
+  /fs-service/rename-entity:
     post:
       summary: rename-entity
       tags:
@@ -400,7 +439,7 @@ paths:
                   errorDetail:
                     type: string
 
-  /api/fs-service/delete-entity:
+  /fs-service/delete-entity:
     post:
       summary: delete-entity
       tags:
@@ -439,7 +478,7 @@ paths:
                   errorDetail:
                     type: string
 
-  /api/share-service/make-shared:
+  /share-service/make-shared:
     post:
       summary: make-shared
       tags:
@@ -484,7 +523,7 @@ paths:
                   errorDetail:
                     type: string
 
-  /api/share-service/make-unshared:
+  /share-service/make-unshared:
     post:
       summary: make-unshared
       tags:
@@ -523,7 +562,7 @@ paths:
                   errorDetail:
                     type: string
 
-  /api/share-service/get-all-shared-entities:
+  /share-service/get-all-shared-entities:
     get:
       summary: get-all-shared-entities
       tags:
@@ -557,7 +596,7 @@ paths:
 
   /share/{userName}/{sharedLink}:
     get:
-      summary: share-route-get
+      summary: share-{userName}-{sharedLink}
       tags:
         - Share Route
       parameters:
@@ -597,7 +636,7 @@ paths:
 
   /share/{userName}/{sharedLink}/file:
     get:
-      summary: share-route-get-file
+      summary: share-{userName}-{sharedLink}-file
       tags:
         - Share Route
       parameters:
@@ -637,7 +676,7 @@ paths:
         404:
           description: on not found
 
-  /api/download-service/download:
+  /download-service/download:
     get:
       summary: download
       tags:
@@ -674,6 +713,41 @@ paths:
                   errorDetail:
                     type: string
 
+  /download-service/download-by-eid:
+    get:
+      summary: download-by-eid
+      tags:
+        - Download Service
+      description:
+        "[!] `session_token` required"
+      parameters:
+        - name: target
+          in: query
+          schema:
+            type: string
+      responses:
+        200:
+          description: "on success"
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+                example: "binary"
+        4xx:
+          description: "on error"
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - errorType
+                  - errorDetail
+                properties:
+                  errorType:
+                    type: string
+                  errorDetail:
+                    type: string
 
 
 

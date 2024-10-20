@@ -30,7 +30,7 @@ import _4Tipsy.TinyCloudAPI.routing.staticRouting
 
 
 /* main */
-const val API_VERSION = "2.1.0" // also in openapi.yaml
+const val API_VERSION = "2.1.1" // also in openapi.yaml
 fun main() {
   Databases.lifeCheck() // lifeCheck db's
   embeddedServer(

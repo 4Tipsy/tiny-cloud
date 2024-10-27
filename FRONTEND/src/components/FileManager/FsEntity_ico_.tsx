@@ -38,7 +38,7 @@ const FsEntity_ico_ = ({e, className}: {e: FsEntity, className: string}) => {
         <video className="w-full h-full bg-cover center-div text-md" preload="metadata">
           <source src={window.API_URL + '/download-service/download-by-eid?target=' + e.eid + "#t=0.1"} />
         </video>
-        <div className="absolute w-full h-full top-0 left-0 bg-[url('/video-frame.png')] bg-contain"/>
+        <FAI className="absolute w-[30%] h-[30%] bottom-0 right-0" icon={"fa-clapperboard, fa-solid" as IconProp}/>
       </div>
 
 

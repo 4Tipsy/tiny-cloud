@@ -35,10 +35,10 @@ const FsEntity_ico_ = ({e, className}: {e: FsEntity, className: string}) => {
       : _mimeType==="video"
       ? 
       <div className={clsx("relative", className)}>
-        <video className="w-full h-full bg-cover center-div text-md" preload="metadata">
+        <video className="w-full h-full object-cover center-div text-md" preload="metadata">
           <source src={window.API_URL + '/download-service/download-by-eid?target=' + e.eid + "#t=0.1"} />
         </video>
-        <FAI className="absolute w-[30%] h-[30%] bottom-0 right-0" icon={"fa-clapperboard, fa-solid" as IconProp}/>
+        <FAI className="absolute w-[40%] !h-[40%] bottom-0 right-0" icon={"fa-clapperboard fa-solid" as IconProp}/>
       </div>
 
 

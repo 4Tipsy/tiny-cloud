@@ -1,13 +1,12 @@
 
 import { atom } from "jotai"
-import { atomWithStorage } from "jotai/utils"
 
 import { uploaderAtom_value } from "./uploaderAtom"
 
 
 
 
-const collectionAtom_value = atomWithStorage<'DRIVE'|'SHARED'|'TRASH'>('@collection', 'DRIVE')
+const collectionAtom_value = atom<'DRIVE'|'SHARED'|'TRASH'>('DRIVE')
 
 const collectionAtom = atom(
   get => get(collectionAtom_value),
@@ -20,7 +19,7 @@ const collectionAtom = atom(
 
 
 
-const fsPathAtom_value = atomWithStorage<string[]>('@fsPath', [])
+const fsPathAtom_value = atom<string[]>([])
 
 const fsPathAtom = atom(
   get => get(fsPathAtom_value),

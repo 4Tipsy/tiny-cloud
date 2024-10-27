@@ -29,6 +29,7 @@ export default {
       highlight: "#B63BC1",
       ntw: "#F1F1F1", // <- not that white
       shading: "rgba(0,0,0,0.6)",
+      folderColor: "#F9BE72",
 
       status: {
         err: "#B10003",

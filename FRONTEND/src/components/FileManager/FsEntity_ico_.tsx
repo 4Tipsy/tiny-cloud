@@ -14,7 +14,7 @@ const FsEntity_ico_ = ({e, className}: {e: FsEntity, className: string}) => {
 
   // if Directory
   if (e.baseType === 'Directory') {
-    return ( <FAI className={className} icon={"fa-folder-closed fa-solid" as IconProp}/> )
+    return ( <FAI className={clsx(className, "text-folderColor")} icon={"fa-folder-closed fa-solid" as IconProp}/> )
 
 
   // if File
@@ -35,7 +35,9 @@ const FsEntity_ico_ = ({e, className}: {e: FsEntity, className: string}) => {
       : _mimeType==="video"
       ? 
       <div className={clsx("relative", className)}>
-        <img className="w-full h-full bg-cover center-div text-md" alt='no preview' src={window.API_URL + '/download-service/download-by-eid?target=' + e.eid} />
+        <video className="w-full h-full bg-cover center-div text-md" preload="metadata">
+          <source src={window.API_URL + '/download-service/download-by-eid?target=' + e.eid + "#t=0.1"} />
+        </video>
         <div className="absolute w-full h-full top-0 left-0 bg-[url('/video-frame.png')] bg-contain"/>
       </div>
 

@@ -38,7 +38,7 @@ const AsideMenu = () => {
     <>
       {
         !showAside && 
-        <div className="show-aside-trigger absolute top-[50vh] translate-y-[-50%] bg-[rgba(0,0,0,0.8)] text-3xl h-[30vh] w-[45px] center-div z-10 cursor-pointer"
+        <div className="show-aside-trigger absolute top-[50vh] translate-y-[-50%] bg-[rgba(0,0,0,0.8)] text-[22px] h-[30vh] w-[30px] center-div z-10 cursor-pointer"
         onClick={_ => setShowAside(true)}>
           <div className="rotate-90 text-nowrap">
             Open aside

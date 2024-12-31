@@ -91,12 +91,16 @@ const LoginModal = () => {
 
           <div className="email-input w-[80%] bg-main-2 border-main-3 border-[1px] font-main_regular_italic">
             <input className="w-full h-full bg-[transparent] pl-3 py-2" type="text" placeholder="Email" autoFocus
-            value={email} onChange={e => setEmail(e.currentTarget.value)} />
+            value={email}
+            onChange={e => setEmail(e.currentTarget.value)} 
+            onKeyDown={e => {if (e.key=="Enter") {e.preventDefault(); handleLogin()} }}/>
           </div>
 
           <div className="password-input w-[80%] bg-main-2 border-main-3 border-[1px] font-main_regular_italic">
             <input className="w-full h-full bg-[transparent] pl-3 py-2" type="password" placeholder="Password" 
-            value={password} onChange={e => setPassword(e.currentTarget.value)} />
+            value={password}
+            onChange={e => setPassword(e.currentTarget.value)} 
+            onKeyDown={e => {if (e.key=="Enter") {e.preventDefault(); handleLogin()} }}/>
           </div>
 
           <button className="bg-highlight rounded cursor-pointer hover:underline px-6 py-2" onClick={_ => handleLogin()}>

@@ -52,6 +52,8 @@ const FsEntity_ico_ = ({e, className}: {e: FsEntity, className: string}) => {
       : extensions.wordFileFormat.some(i => e.name.endsWith(i))
       ? <FAI className={className} icon={"fa-file-word fa-solid" as IconProp}/>
 
+      : extensions.pdfFileFormat.some(i => e.name.endsWith(i))
+      ? <FAI className={className} icon={"fa-file-pdf fa-solid" as IconProp}/>
 
       // any other file
       : <FAI className={className} icon={"fa-file fa-solid" as IconProp}/>
@@ -73,7 +75,9 @@ const extensions = {
     // configs
     '.json', '.json5', '.toml', '.yaml', '.yml', '.xml', '.conf', '.ini', '.cfg', '.info',
     // program langs
-    '.js', '.jsx', '.jsm', '.ts', '.tsx', '.py', '.rs', '.kt', '.scala', '.java', '.go', '.sh', '.bat',
+    '.js', '.jsx', '.jsm', '.ts', '.tsx', '.py', '.rs', '.kt', '.scala', '.java', '.go', '.lua', '.php', '.sh', '.bat',
+    // .txt (cuz idc)
+    '.txt'
   ],
 
   arcs: [
@@ -84,7 +88,11 @@ const extensions = {
 
   wordFileFormat: [
     '.doc', 'docx', '.dot', '.dotx', '.docm', '.dotm'
-  ]
+  ],
+
+  pdfFileFormat: [
+    '.pdf'
+  ],
 
 }
 

@@ -48,14 +48,20 @@ const FsEntity_inTable = ({entity, REFRESH_FS}: {entity: FsEntity, REFRESH_FS: F
     if (entity.baseType === 'Directory') {
       if (collection == 'DRIVE') setFsPath([...fsPath, entity.name]) // only in "drive:/..."
     }
-    if (_mimeType === "image") {
+    else if (_mimeType === "image") {
       setLocation(`/image/${entity.eid}`)
     }
-    if (_mimeType === "audio") {
+    else if (_mimeType === "audio") {
       setLocation(`/audio/${entity.eid}`)
     }
-    if (_mimeType === "video") {
+    else if (_mimeType === "video") {
       setLocation(`/video/${entity.eid}`)
+    }
+    else if (_mimeType === "text") {
+      setLocation(`/text/${entity.eid}`)
+    }
+    else {
+      alert(`Can't auto handle mime_type ("${entity.mimeType}")`)
     }
   }
 
@@ -63,6 +69,7 @@ const FsEntity_inTable = ({entity, REFRESH_FS}: {entity: FsEntity, REFRESH_FS: F
 
   let contextMenuOptions = [
     //{"label": "Open", "handler": handleClick},
+    //{"label": "Open", "handler": <open_as_raw_text>},
     {"label": "Rename", "handler": () => renameEntity(fsPath, entity.name, REFRESH_FS) },
     {"label": "Download", "handler": () => downloadEntity(fsPath, entity.name) },
     (entity.isShared) 
@@ -70,17 +77,28 @@ const FsEntity_inTable = ({entity, REFRESH_FS}: {entity: FsEntity, REFRESH_FS: F
       : {"label": "Share", "handler": () => shareEntity(fsPath, entity.name, user.data!!.name, REFRESH_FS)},
     {"label": "Delete", "handler": () => deleteEntity(fsPath, entity.name, REFRESH_FS) },
   ]
+  if (entity.baseType == 'File') {
+    const _fn = () => setLocation(`/raw-text/${entity.eid}`)
+    contextMenuOptions.unshift( {"label": "Raw text", "handler": _fn} )
+  }
   if (entity.baseType == 'File' || collection == 'DRIVE') {
     contextMenuOptions.unshift( {"label": "Open", "handler": handleClick} )
   }
 
-
+  const handleContextMenu = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (!e.ctrlKey) {
+      e.stopPropagation()
+      e.preventDefault()
+      setContextMenuCords([e.pageX, e.pageY])
+      setContentMenuIsOpened(true)
+    }
+  }
 
 
 
   return (
     <div
-      onContextMenu={e => {e.preventDefault(); e.stopPropagation(); setContextMenuCords([e.pageX, e.pageY]); setContentMenuIsOpened(true)} }
+      onContextMenu={e => {handleContextMenu(e)} }
       data-eid={entity.eid}
       className="col-span-full text-lg hover:bg-[rgba(0,0,0,0.3)] rounded-xl cursor-pointer  grid grid-cols-[7vh_5fr_1fr_auto] gap-1 items-center px-3"
       onClick={_ => handleClick()}
@@ -98,7 +116,7 @@ const FsEntity_inTable = ({entity, REFRESH_FS}: {entity: FsEntity, REFRESH_FS: F
       }
 
 
-      <div className="opacity-40">{entity.size ? prettifySize(entity.size) : '<Dir>'}</div>
+      <div className="opacity-40 text-nowrap">{entity.size ? prettifySize(entity.size) : '<Dir>'}</div>
 
       { entity.isShared ?
       <div className="text-highlight hover:underline"

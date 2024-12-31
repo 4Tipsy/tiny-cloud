@@ -8,6 +8,6 @@ declare global {
   }
 }
 
-window.API_URL = "http://localhost:1234/api"
+window.API_URL = "http://localhost:1234"
 window.SHARE_BASE_URL = "http://share.tiny-cloud.xyz"
 window.SOURCE_CODE_LINK = "https://github.com/4Tipsy/tiny-cloud/tree/main/FRONTEND"

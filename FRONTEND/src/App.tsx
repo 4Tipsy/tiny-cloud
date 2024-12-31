@@ -14,6 +14,7 @@ import { ProfileModal } from "./components/ProfileModal/ProfileModal"
 import { ImageViewer } from "./components/ImageViewer/ImageViewer"
 import { AudioPlayer } from "./components/AudioPlayer/AudioPlayer"
 import { VideoPlayer } from "./components/VideoPlayer/VideoPlayer"
+import { RTextViewer } from "./components/RTextViewer/RTextViewer"
 import { HotkeysModal } from "./components/HotkeysModal/HotkeysModal"
 
 import { DndUpload } from "./components/FileUploader/DndUpload"
@@ -64,6 +65,8 @@ const App = () => {
           <Route path={"/image/:entityEid"}>{params => <ImageViewer entityEid={params.entityEid}/>}</Route> 
           <Route path={"/audio/:entityEid"}>{params => <AudioPlayer entityEid={params.entityEid}/>}</Route>
           <Route path={"/video/:entityEid"}>{params => <VideoPlayer entityEid={params.entityEid}/>}</Route>
+          <Route path={"/text/:entityEid"} >{params => <RTextViewer entityEid={params.entityEid}/>}</Route>
+          <Route path={"/raw-text/:entityEid"}>{params => <RTextViewer entityEid={params.entityEid}/>}</Route> {/* <- alias */}
           <Route path={"/hotkeys"} component={HotkeysModal} />
 
           <DndUpload showSelf={dndUploadShow} setShowSelf={setDndUploadShow}/>

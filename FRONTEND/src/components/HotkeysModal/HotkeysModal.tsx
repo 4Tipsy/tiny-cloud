@@ -45,6 +45,7 @@ const HotkeysModal = () => {
           <div> <span className="text-highlight">Ctrl + M</span> = create new directory (in current dir) </div>
           <div> <span className="text-highlight">Ctrl + U</span> = open user profile settings</div>
           <div> <span className="text-highlight">Del</span> = reload current folder contents</div>
+          <div> <span className="text-highlight">Ctrl + RClick on FsEntity</span> = prevent custom context menu</div>
         </div>
 
       </div>

@@ -6,11 +6,9 @@ import org.bson.Document
 import kotlinx.coroutines.flow.firstOrNull
 
 import io.ktor.server.application.ApplicationCall
-import io.ktor.server.request.header
 import io.ktor.http.HttpStatusCode
 
 import kotlinx.serialization.json.Json
-import kotlin.jvm.Throws
 
 
 // modules
@@ -32,7 +30,7 @@ suspend fun AuthGuard(call: ApplicationCall, allowUnverified: Boolean = false): 
 
 
 
-  val sessionToken = call.request.cookies.get("session_token")
+  val sessionToken = call.request.cookies.get("tiny-cloud.session_token")
   if (sessionToken == null) throw HttpException(HttpStatusCode.Unauthorized, "Unauthorized", "User is not authorized, please login")
 
 

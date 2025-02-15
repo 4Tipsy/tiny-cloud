@@ -14,11 +14,11 @@ import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.Dispatchers
 
-import kotlin.jvm.Throws
-
 import java.io.File
 import java.io.InputStream
 import java.nio.file.Files
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 
 // modules
@@ -119,6 +119,7 @@ class FsEntityService {
       }
 
       // construct
+      val _createdAt: String = ZonedDateTime.now().format( DateTimeFormatter.RFC_1123_DATE_TIME )
       val newFsEntity = FsEntity(
         eid = newEid,
         parentEid = _whereEid,
@@ -127,8 +128,8 @@ class FsEntityService {
         baseType = BaseType.Directory,
         mimeType = null,
         size = null,
-        createdAt = "",
-        modifiedAt = "",
+        createdAt = _createdAt,
+        modifiedAt = _createdAt,
         isShared = false,
         sharedLink = null,
       )
@@ -171,6 +172,7 @@ class FsEntityService {
       }
 
       // construct
+      val _createdAt: String = ZonedDateTime.now().format( DateTimeFormatter.RFC_1123_DATE_TIME )
       val newFsEntity = FsEntity(
         eid = newEid,
         parentEid = _whereEid,
@@ -179,8 +181,8 @@ class FsEntityService {
         baseType = BaseType.File,
         mimeType = _mimeType,
         size = _fileSize,
-        createdAt = "",
-        modifiedAt = "",
+        createdAt = _createdAt,
+        modifiedAt = _createdAt,
         isShared = false,
         sharedLink = null,
       )

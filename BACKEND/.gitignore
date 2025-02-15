@@ -5,4 +5,5 @@
 .kotlin
 
 app/build
+app/bin
 app/Config.toml

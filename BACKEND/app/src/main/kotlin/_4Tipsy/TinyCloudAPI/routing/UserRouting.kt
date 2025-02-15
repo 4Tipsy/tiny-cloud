@@ -74,8 +74,8 @@ fun Routing.userRouting() {
         )
 
         // if ok
-        call.response.cookies.append("session_token", sessionId, maxAge = Config.load().main.sessionTtl, path = "/")
-        call.response.cookies.append("refresh_token", refreshToken, maxAge = Config.load().main.refreshTtl, path = "/api/user-service/refresh-token")
+        call.response.cookies.append("tiny-cloud.session_token", sessionId, maxAge = Config.load().main.sessionTtl, path = "/")
+        call.response.cookies.append("tiny-cloud.refresh_token", refreshToken, maxAge = Config.load().main.refreshTtl, path = "/")
         call.respond("OK")
       }
     }
@@ -84,6 +84,7 @@ fun Routing.userRouting() {
 
 
     /* ROUTE */
+    /*
     route("/refresh-session") {
 
       // models
@@ -102,12 +103,12 @@ fun Routing.userRouting() {
         )
 
         // if ok
-        call.response.cookies.append("session_token", newSessionId, maxAge = Config.load().main.sessionTtl)
-        call.response.cookies.append("refresh_token", newRefreshToken, maxAge = Config.load().main.refreshTtl, path = "/api/user-service/refresh-token")
+        call.response.cookies.append("tiny-cloud.session_token", newSessionId, maxAge = Config.load().main.sessionTtl)
+        call.response.cookies.append("tiny-cloud.refresh_token", newRefreshToken, maxAge = Config.load().main.refreshTtl, path = "/api/user-service/refresh-token")
         call.respond("OK")
       }
     }
-
+    */
 
 
 

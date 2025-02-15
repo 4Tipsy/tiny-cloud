@@ -41,8 +41,8 @@ const ProfileModal = () => {
 
 
   const handleLogOut = () => {
-    Cookies.remove('session_token')
-    Cookies.remove('refresh_token')
+    Cookies.remove('TinyCloud.sessionToken')
+    Cookies.remove('TinyCloud.refreshToken')
     window.location.reload()
   }
 

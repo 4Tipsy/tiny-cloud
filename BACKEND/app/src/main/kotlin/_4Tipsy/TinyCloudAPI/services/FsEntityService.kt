@@ -24,6 +24,7 @@ import java.time.format.DateTimeFormatter
 // modules
 import _4Tipsy.TinyCloudAPI.core.PseudoFs
 import _4Tipsy.TinyCloudAPI.exceptions.HttpException
+import _4Tipsy.TinyCloudAPI.exceptions.PseudoFsException
 import _4Tipsy.TinyCloudAPI.models.FsEntity
 import _4Tipsy.TinyCloudAPI.models.BaseType
 import _4Tipsy.TinyCloudAPI.models.User
@@ -98,6 +99,11 @@ class FsEntityService {
     @Throws(HttpException::class)
     suspend fun createNewDir(where: String, _whereEid: String?, name: String, uid: String): String {
 
+      // no '/' in names!
+      if (name.contains("/")) {
+        throw HttpException(HttpStatusCode.BadRequest, "Invalid entity name", "Char '/' is not allowed in entity name (potential conflict with paths)")
+      }
+
       // if name already taken
       if (fsEntityCollection.find(
         Filters.and(
@@ -145,6 +151,11 @@ class FsEntityService {
     * upload file
     */
     suspend fun uploadFile(where: String, _whereEid: String?, name: String, uid: String, fileStream: InputStream, _mimeType: String, _fileSize: Long) {
+
+      // no '/' in names!
+      if (name.contains("/")) {
+        throw HttpException(HttpStatusCode.BadRequest, "Invalid entity name", "Char '/' is not allowed in entity name (potential conflict with paths)")
+      }
 
       // if name already taken
       if (fsEntityCollection.find(
@@ -210,6 +221,11 @@ class FsEntityService {
     */
     @Throws(HttpException::class)
     suspend fun renameEntity(target: String, _targetEid: String, newName: String, uid: String) {
+
+      // no '/' in names!
+      if (newName.contains("/")) {
+        throw HttpException(HttpStatusCode.BadRequest, "Invalid entity name", "Char '/' is not allowed in entity name (potential conflict with paths)")
+      }
 
       // try to edit
       val fsEntity = fsEntityCollection.findOneAndUpdate(
@@ -281,6 +297,51 @@ class FsEntityService {
       )
 
     }
+
+
+
+    /*
+    * moveEntity
+    */
+    @Throws(HttpException::class)
+    suspend fun moveEntity(target: String, _targetEid: String?, newParentPath: String, uid: String) {
+
+      // try to get newParentPath
+      val newParentEid: String?
+      try {
+        newParentEid = PseudoFs.pathToEid(newParentPath, uid = uid)
+
+      } catch (e: PseudoFsException) {
+        throw HttpException(HttpStatusCode.BadRequest, "No such entity", "'$newParentPath' does not exist")
+      }
+
+      // if newParent is File
+      val newParent = fsEntityCollection.find(
+        Filters.and(
+          Document("eid", newParentEid),
+          Document("ownerUid", uid)
+        )
+      ).firstOrNull()
+      if (newParent!!.baseType == BaseType.File) {
+        throw HttpException(HttpStatusCode.BadRequest, "New parent is File", "Can't move target entity into File")
+      }
+
+      // try to edit
+      val fsEntity = fsEntityCollection.findOneAndUpdate(
+        Filters.and(
+          Document("eid", _targetEid),
+          Document("ownerUid", uid)
+        ),
+        Updates.set("parentEid", newParentEid)
+      )
+
+      // if no entity found
+      if (fsEntity == null) {
+        throw HttpException(HttpStatusCode.BadRequest, "No such entity", "There is no entity on path '$target'")
+      }
+    }
+
+
 
 
 

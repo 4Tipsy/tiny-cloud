@@ -3,7 +3,6 @@ package _4Tipsy.TinyCloudAPI.services
 
 
 import java.io.File
-import kotlin.io.path.toPath
 
 
 class StaticService {

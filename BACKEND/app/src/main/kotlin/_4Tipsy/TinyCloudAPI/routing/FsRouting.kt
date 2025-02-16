@@ -4,7 +4,7 @@ package _4Tipsy.TinyCloudAPI.routing
 
 import io.ktor.server.routing.*
 import io.ktor.server.application.call
-import io.ktor.server.response.*
+import io.ktor.server.response.respond
 
 import kotlinx.serialization.Serializable
 
@@ -119,6 +119,7 @@ fun Routing.fsRouting() {
 
 
 
+
     /* ROUTE */
     route("/rename-entity") {
 
@@ -180,6 +181,36 @@ fun Routing.fsRouting() {
 
 
 
+
+
+    /* ROUTE */
+    route("/move-entity") {
+
+      // models
+      @Serializable
+      data class RequestBody (
+        val target: String,
+        val newParent: String,
+      )
+
+      // handler
+      post {
+        val uid = AuthGuard(call) // AUTH NEEDED
+
+        val body = call.receiveValid<RequestBody>()
+        val targetEid = GetValidEid(body.target, uid)
+
+        FsEntityService.moveEntity(
+          target = body.target,
+          _targetEid = targetEid,
+          newParentPath = body.newParent,
+          uid = uid
+        )
+
+        // if ok
+        call.respond("OK")
+      }
+    }
 
 
   }

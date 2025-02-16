@@ -146,8 +146,9 @@ const moveEntity = (fsPath: string[], entityName: string, RELOADER: Function) =>
   if (newParent == null) return
 
   // validate newParent path
-  if (!newParent.startsWith("/") || !newParent.startsWith("drive:/")) {
+  if (!newParent.startsWith("/") && !newParent.startsWith("drive:/")) {
     alert(`Entered path should start with '/', aka be absolute (\"${newParent}\")`)
+    return
   }
 
 

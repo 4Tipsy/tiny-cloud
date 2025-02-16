@@ -13,7 +13,7 @@ import { useState } from "react"
 
 import { ContextMenu } from "./ContextMenu"
 
-import { renameEntity, downloadEntity, shareEntity, unshareEntity, deleteEntity } from "./_someCommonFn"
+import { renameEntity, downloadEntity, shareEntity, unshareEntity, deleteEntity, moveEntity } from "./_someCommonFn"
 
 import { fetchUser } from "../../requests/fetchUser"
 
@@ -75,6 +75,7 @@ const FsEntity_inTable = ({entity, REFRESH_FS}: {entity: FsEntity, REFRESH_FS: F
     (entity.isShared) 
       ? {"label": "Unshare", "handler": () => unshareEntity(fsPath, entity.name, REFRESH_FS)}
       : {"label": "Share", "handler": () => shareEntity(fsPath, entity.name, user.data!!.name, REFRESH_FS)},
+    {"label": "Move", "handler": () => moveEntity(fsPath, entity.name, REFRESH_FS)},
     {"label": "Delete", "handler": () => deleteEntity(fsPath, entity.name, REFRESH_FS) },
   ]
   if (entity.baseType == 'File') {

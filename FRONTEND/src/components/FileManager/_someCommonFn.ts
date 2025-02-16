@@ -2,6 +2,7 @@
 import { AxiosError } from "axios"
 import { performRenameEntity } from "../../requests/performRenameEntity"
 import { performDeleteEntity } from "../../requests/performDeleteEntity"
+import { performMoveEntity } from "../../requests/performMoveEntity"
 import { performShare, performUnshare } from "../../requests/performShareActions"
 
 
@@ -139,5 +140,41 @@ const deleteEntity = (fsPath: string[], entityName: string, RELOADER: Function) 
 
 
 
+const moveEntity = (fsPath: string[], entityName: string, RELOADER: Function) => {
 
-export { renameEntity, downloadEntity, shareEntity, unshareEntity, deleteEntity }
+  const newParent = prompt("Enter new target's parent path")
+  if (newParent == null) return
+
+  // validate newParent path
+  if (!newParent.startsWith("/") || !newParent.startsWith("drive:/")) {
+    alert(`Entered path should start with '/', aka be absolute (\"${newParent}\")`)
+  }
+
+
+  performMoveEntity(fsPath, entityName, newParent)
+  .then(_ => {
+    RELOADER()
+  })
+  .catch(_e => {
+    const e: AxiosError = _e
+
+
+    if (e.response) {
+      //@ts-ignore      
+      const s1 = `Error[${e.response.status}]: ${e.response.data.errorType}`
+      //@ts-ignore    
+      const s2 = `Details: ${e.response.data.errorDetail}`
+
+      alert(s1 + '\n' + s2)
+
+    } else {
+      alert("Failed to send response")
+
+    }
+  })
+}
+
+
+
+
+export { renameEntity, downloadEntity, shareEntity, unshareEntity, deleteEntity, moveEntity }

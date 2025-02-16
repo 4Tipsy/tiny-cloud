@@ -322,8 +322,10 @@ class FsEntityService {
           Document("ownerUid", uid)
         )
       ).firstOrNull()
-      if (newParent!!.baseType == BaseType.File) {
-        throw HttpException(HttpStatusCode.BadRequest, "New parent is File", "Can't move target entity into File")
+      if (newParent != null) { // if not Root
+        if (newParent.baseType == BaseType.File) {
+          throw HttpException(HttpStatusCode.BadRequest, "New parent is File", "Can't move target entity into File")
+        }
       }
 
       // try to edit

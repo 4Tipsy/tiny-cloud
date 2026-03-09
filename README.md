@@ -1,7 +1,7 @@
 ## Tiny Cloud
 ## Cloud file storage service
-Link! http://tiny-cloud.xyz  
-Api routes! http://api.tiny-cloud.xyz/docs  
+Link! http://tiny-cloud.xyz (NOT ACTIVE)  
+Api routes! http://api.tiny-cloud.xyz/docs (NOT ACTIVE)  
 
 ---
 

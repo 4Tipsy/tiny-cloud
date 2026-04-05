@@ -46,7 +46,7 @@ const RTextViewer = ({entityEid}: {entityEid: string}) => {
   const [txtContent, setTxtContent] = useState("loading...")
   useEffect(() => {
 
-    // eid of Directory always ends with 'D'. As it wouldn't be previewed anyway, lets spare server and won't download it (cuz downloading dirs is fucking expensive!)
+    // eid of Directory always ends with 'D'. As it wouldn't be previewed anyway, spare server and don't download it
     if (entityEid.endsWith('D')) {return}
     
     axios.get(rawTextSrcUrl, {withCredentials: true})
